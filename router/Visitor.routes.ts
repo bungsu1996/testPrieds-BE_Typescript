@@ -7,6 +7,7 @@ class VisitorRoutes {
     this.router = Router();
     this.visitorInput();
     this.listVisitor();
+    this.searchVisitors();
   }
   protected visitorInput = () => {
     this.router.post("/input-visitor", VisitorController.inputVisitor);
@@ -14,6 +15,9 @@ class VisitorRoutes {
   protected listVisitor = () => {
     this.router.get("/", VisitorController.listVisitors);
   };
+  protected searchVisitors = () => {
+    this.router.post("/search-byname", VisitorController.searchByName);
+  }
 }
 
 const VisitorRouter = new VisitorRoutes().router;

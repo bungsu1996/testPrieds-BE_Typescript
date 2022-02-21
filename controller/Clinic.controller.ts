@@ -14,6 +14,16 @@ class ClinicController {
       next(error);
     }
   }
+
+  static async listClinic(req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = await Clinic.find().populate("doctor");
+      res.status(200).json(result);
+    } catch (error) {
+      console.log((error as Error).message);
+      next(error);
+    }
+  }
 }
 
 export default ClinicController;

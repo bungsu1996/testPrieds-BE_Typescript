@@ -6,9 +6,13 @@ class ClinicRoutes {
   constructor() {
     this.router = Router();
     this.clinicCreate();
+    this.clinicList();
   }
   protected clinicCreate = () => {
     this.router.post("/create", ClinicController.newClinic);
+  };
+  protected clinicList = () => {
+    this.router.get("/", ClinicController.listClinic);
   };
 }
 

@@ -1,5 +1,7 @@
 import { Request, Response, Router } from "express";
 import { ClinicRouter } from "./Clinic.routes";
+import { DoctorRouter } from "./Doctor.routes";
+import { TicketRouter } from "./Ticket.routes";
 import { VisitorRouter } from "./Visitor.routes";
 
 class Routes {
@@ -10,6 +12,7 @@ class Routes {
     this.visitorRoute();
     this.clinicRoute();
     this.doctorRoute();
+    this.ticketRoute();
   }
   protected route = () => {
     this.router.get("/", (req: Request, res: Response) => {
@@ -22,7 +25,12 @@ class Routes {
   protected clinicRoute = () => {
     this.router.use("/clinic", ClinicRouter);
   };
-  protected doctorRoute = () => {};
+  protected doctorRoute = () => {
+    this.router.use("/doctor", DoctorRouter);
+  };
+  protected ticketRoute = () => {
+    this.router.use("/ticket", TicketRouter);
+  };
 }
 
 export default new Routes().router;

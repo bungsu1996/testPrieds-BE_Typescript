@@ -4,6 +4,7 @@ import logger from "morgan";
 import cookieParser from "cookie-parser";
 import path from "path";
 import connectDBMongoose from "./configs/connectDB";
+import router from "./router/router";
 
 class App {
   public app: Application;
@@ -35,7 +36,9 @@ class App {
     this.app.use(cookieParser());
     this.app.use(express.static(path.join(__dirname, "public")));
   };
-  protected router = () => {};
+  protected router = () => {
+    this.app.use("/api", router);
+  };
   protected errorHandler = () => {
     this.app.use(function (req: Request, res: Response, next: NextFunction) {
       next(createHttpError(404));

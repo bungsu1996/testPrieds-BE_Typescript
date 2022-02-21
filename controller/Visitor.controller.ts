@@ -28,7 +28,6 @@ class VisitorController {
         const n = parseInt(getID[0].visitorId);
         visitorId = String(n + 1).padStart(4, "0");
       }
-      console.log(visitorId);
       const findClinic = await Clinic.findOne({ clinicName: clinic });
       if (!findClinic) {
         throw { name: "NOT_FOUND_CLINIC" };
@@ -57,7 +56,20 @@ class VisitorController {
 
   static async listVisitors(req: Request, res: Response, next: NextFunction) {
     try {
-      const result = await Visitor.find();
+      const result = await Visitor.find().populate("clinic");
+      res.status(200).json(result);
+    } catch (error) {
+      console.log((error as Error).message);
+      next(error);
+    }
+  }
+
+  static async searchByName(req: Request, res: Response, next: NextFunction) {
+    const { visitorName } = req.body;
+    try {
+      const result = await Visitor.find({
+        visitorName: { $regex: visitorName, $options: "$i" },
+      }).populate("clinic");
       res.status(200).json(result);
     } catch (error) {
       console.log((error as Error).message);
